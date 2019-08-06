@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+<script>
+$(document).ready(function(){
+	$("button").click(function(){
+		$.get("/get-name",function(data,status){
+			    var html = '<p>';
+			    html += data.name + '<br>'
+                            html += data.sentence + '<br>'
+                            html += data.book + '<br>'
+                            html += data.title + '<br>'
+                            html += data.author + '<br>'
+			    html += '</p>';
+			    
+			    $('#divCustomers').html(html); 
+		});
+	});
+});
+</script>
+</head>
+
+<body>
+<div id="divCustomers"></div>
+<button>不好</button>
+</body>
+</html>
+
