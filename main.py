@@ -8,6 +8,7 @@ import random
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from os import path
 from urllib.parse import urlparse
+from urllib.parse import unquote
 import json
 
 
@@ -34,7 +35,7 @@ def getname(fulllist):
     while len(sentence_list) < 2:
         article = random.choice(fulllist)
         content = re.sub(r'[（(].+[)）]', '', article['content'])
-        sentence_list = re.split(r'[。？！\s]', content)
+        sentence_list = re.split(r'[。？！；?!;\s]', content)
         #print(sentence_list)
     sentence = ''
     while len(sentence) < 3:
@@ -83,6 +84,18 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
             self.end_headers()
             content = json.dumps(getname(fulllist))
             self.wfile.write(content.encode('utf-8'))
+        elif filepath.endswith('/save-name'):
+            try:
+                with open('names.txt', 'a', encoding='utf-8') as fw:
+                    fw.write(unquote(query)[5:] + '\n')
+                with open(path.realpath(curdir + sep + 'index.html'),'rb') as f:
+                    content = f.read()
+                    self.send_response(200)
+                    self.send_header('Content-type','text/html')
+                    self.end_headers()
+                    self.wfile.write(content)
+            except IOError:
+                self.send_error(404,'File Not Found: %s' % self.path)
 
             
 def run():

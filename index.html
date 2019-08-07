@@ -2,18 +2,23 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
 <script>
+function getname()
+{
+}
 $(document).ready(function(){
 	$("button").click(function(){
 		$.get("/get-name",function(data,status){
-			    var html = '<p>';
-			    html += data.name + '<br>'
-                            html += data.sentence + '<br>'
-                            html += data.book + '<br>'
-                            html += data.title + '<br>'
-                            html += data.author + '<br>'
-			    html += '</p>';
+			    var html = ''
+			    html +=  '<h1 align = "center">' + data.name + '</h1>'
+                            html += '<h2 align = "center">' + data.sentence + '</h2>'
+                            html += '<h3 align = "center">' + data.book + '</h3>'
+                            html += '<h3 align = "center">' + data.title + '</h3>'
+                            html += '<h3 align = "center">' + data.author + '</h3>'
+                            html += '<h1 align = "center">' + '<a href="save-name?text=' + data.name+'|' + data.sentence +'">存下好名字</a>' + '</h1>'
 			    
 			    $('#divCustomers').html(html); 
 		});
@@ -24,7 +29,7 @@ $(document).ready(function(){
 
 <body>
 <div id="divCustomers"></div>
-<button>不好</button>
+<button align = "center" name = "button1">下一个</button>
 </body>
 </html>
 
